@@ -8,7 +8,7 @@ try:
     TOKEN = os.environ['TOKEN']
     MOD_CHANNEL = os.environ['MOD_CHANNEL']
     USER_COUNT = int(os.environ['USER_COUNT'])
-    IGNORE_CHANNELS = os.environ['IGNORE_CHANNELS'].strip().split(',')
+    IGNORE_CHANNELS = os.environ['IGNORE_CHANNELS'].split(',')
 
 except:
     config = configparser.ConfigParser()
@@ -38,6 +38,9 @@ async def on_raw_reaction_add(payload):
     if payload.emoji.name.lower() == 'pleasestop':
         channel = client.get_channel(payload.channel_id)
         message = await channel.fetch_message(payload.message_id)
+
+        if message.author.id == client.user.id:
+            return
 
         if payload.channel_id in IGNORE_CHANNELS:
             return
