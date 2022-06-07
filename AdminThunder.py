@@ -6,11 +6,13 @@ import configparser
 try:
     TOKEN = os.environ['TOKEN']
     MOD_CHANNEL = os.environ['MOD_CHANNEL']
+    USER_COUNT = int(os.environ['USER_COUNT'])
 except:
     config = configparser.ConfigParser()
     config.read('config.cfg')
     TOKEN = config['INDEV']['TOKEN']
     MOD_CHANNEL = config['INDEV']['MOD_CHANNEL']
+    USER_COUNT = 1
 
 # Create a new interactions Discord client
 intents = discord.Intents.default()
@@ -44,7 +46,7 @@ async def on_raw_reaction_add(payload):
         except:
             files = None
 
-        if reaction.count > 2:
+        if reaction.count > USER_COUNT:
             log_channel = client.get_channel(MOD_CHANNEL)
             user = client.get_user(message.author.id)
 
