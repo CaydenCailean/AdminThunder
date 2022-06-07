@@ -9,7 +9,7 @@ try:
     MOD_CHANNEL = os.environ['MOD_CHANNEL']
     USER_COUNT = int(os.environ['USER_COUNT'])
     IGNORE_CHANNELS = os.environ['IGNORE_CHANNELS'].strip().split(',')
-    MODS = os.environ['MODS']
+
 except:
     config = configparser.ConfigParser()
     config.read('config.cfg')
@@ -17,7 +17,6 @@ except:
     MOD_CHANNEL = config['INDEV']['MOD_CHANNEL']
     USER_COUNT = 1
     IGNORE_CHANNELS = [715969933980467263]
-    MODS = [96084847696560128]
 # Create a new interactions Discord client
 intents = discord.Intents.default()
 intents.members = True
@@ -41,9 +40,6 @@ async def on_raw_reaction_add(payload):
         message = await channel.fetch_message(payload.message_id)
 
         if payload.channel_id in IGNORE_CHANNELS:
-            return
-
-        if message.author.id in MODS:
             return
         
         reaction = discord.utils.get(message.reactions, emoji=payload.emoji)
