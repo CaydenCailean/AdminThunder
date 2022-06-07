@@ -8,8 +8,8 @@ try:
     TOKEN = os.environ['TOKEN']
     MOD_CHANNEL = os.environ['MOD_CHANNEL']
     USER_COUNT = int(os.environ['USER_COUNT'])
-    IGNORE_CHANNELS = list(os.environ['IGNORE_CHANNELS'])
-    MODS = list(os.environ['MODS'])
+    IGNORE_CHANNELS = os.environ['IGNORE_CHANNELS'].strip().split(',')
+    MODS = os.environ['MODS']
 except:
     config = configparser.ConfigParser()
     config.read('config.cfg')
@@ -17,8 +17,7 @@ except:
     MOD_CHANNEL = config['INDEV']['MOD_CHANNEL']
     USER_COUNT = 1
     IGNORE_CHANNELS = [715969933980467263]
-    MODS = None
-
+    MODS = [96084847696560128]
 # Create a new interactions Discord client
 intents = discord.Intents.default()
 intents.members = True
@@ -83,7 +82,7 @@ async def on_message(message):
         return
 
     else:
-        message.process_commands()
+        pass
         
 
 client.run(TOKEN)
