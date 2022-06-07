@@ -46,7 +46,7 @@ async def on_raw_reaction_add(payload):
         except:
             files = None
 
-        if reaction.count > USER_COUNT:
+        if reaction.count >= USER_COUNT:
             log_channel = client.get_channel(MOD_CHANNEL)
             user = client.get_user(message.author.id)
 
