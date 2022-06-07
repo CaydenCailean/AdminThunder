@@ -1,6 +1,7 @@
 import discord
 import os
 import configparser
+import time
 
 # os.environ variables for bot token, mod_channel
 try:
@@ -63,7 +64,7 @@ async def on_raw_reaction_add(payload):
             log_channel = client.get_channel(int(MOD_CHANNEL))
             user = client.get_user(message.author.id)
 
-            await log_channel.send(f"Offending User: {user.display_name} \nChannel: {f'<#{channel.id}>'} \nOffended Users: {', '.join(member.name for member in users)}\nMessage:\n\n {message.content}", files=files)
+            await log_channel.send(f"Offending User: {user.display_name} \nChannel: {f'<#{channel.id}>'}\nTime: <t:{int(time.time())}:F> \nOffended Users: {', '.join(member.name for member in users)}\nMessage:\n\n {message.content}", files=files)
             
             await channel.send(f'{user.mention}, your post has been deleted and is under further review.')
 
