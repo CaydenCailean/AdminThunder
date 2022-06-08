@@ -61,9 +61,9 @@ async def on_raw_reaction_add(payload):
         if reaction.count >= USER_COUNT:
             log_channel = client.get_channel(int(MOD_CHANNEL))
             user = client.get_user(message.author.id)
-
-            await log_channel.send(f"Offending User: {user.display_name} \nChannel: {f'<#{channel.id}>'}\nTime: <t:{int(time.time())}:F> \nOffended Users: {', '.join(member.name for member in users)}\nMessage:\n\n {message.content}", files=files)
-            
+            if message.author.id != 304870344924200972:
+                await log_channel.send(f"Offending User: {user.display_name} \nChannel: {f'<#{channel.id}>'}\nTime: <t:{int(time.time())}:F> \nOffended Users: {', '.join(member.name for member in users)}\nMessage:\n\n {message.content}", files=files)
+                
             await channel.send(f'{user.mention}, your post has been deleted and is under further review.')
 
             await message.delete()
