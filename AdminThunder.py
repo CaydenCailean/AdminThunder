@@ -98,17 +98,16 @@ async def yeet(ctx: discord.ApplicationContext, message: discord.Message):
     try:    
         new_message = await stan.send(f"{message.author.mention} (from {message.channel.mention}): {message.content}", files=files)
     except Exception as e:
-        await mod_channel.send(f"{ctx.author.mention} tried to yeet to Stan's channel, but failed to send a message to {stan.mention}.")
+        await mod_channel.send(f"{ctx.author.mention} tried to yeet to {stan}, but failed to send a message to {stan.mention}.")
         print(e)
 
-    embed = discord.Embed(title="Yeeted to Stan's", description = f"Your message/images were sent to Stan's channel, as they were deemed inappropriate for {message.channel}.", color=0x00ff00)
+    embed = discord.Embed(title="Yeeted to Stan's", description = f"Your message/images were sent to {stan}, as they were deemed inappropriate for {message.channel}.", color=0x00ff00)
     if message.content != "":
         embed.add_field(name = "Message", value = message.content)
     embed.add_field(name = "Moved By", value = ctx.author)
     embed.add_field(name="Moved To", value = new_message.jump_url)
 
     await message.author.send(embed=embed)
-    await ctx.send(f"Message yote.", ephemeral =True)
     #await message.author.send(files=files)
 
     
@@ -120,7 +119,9 @@ async def yeet(ctx: discord.ApplicationContext, message: discord.Message):
     
     await message.delete()
 
-    await mod_channel.send(f"Message from {message.author.mention} in {message.channel.mention} was yeeted to Stan's channel.")
+    await mod_channel.send(f"Message from {message.author.mention} in {message.channel.mention} was yeeted to {stan.mention}.")
+
+
     
 #@yeet.error
 #async def info_error(ctx: discord.ApplicationContext, error):
