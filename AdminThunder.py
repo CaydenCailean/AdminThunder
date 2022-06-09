@@ -12,6 +12,7 @@ try:
     IGNORE_CHANNELS = os.environ['IGNORE_CHANNELS'].split(',')
     MODS = os.environ['MODS'].split(',')
     STAN_CHANNEL = os.environ['STAN_CHANNEL']
+    guild = os.environ['GUILD']
 
 except:
     config = configparser.ConfigParser()
@@ -22,6 +23,7 @@ except:
     IGNORE_CHANNELS = [715969933980467263]
     MODS = [96084847696560128]
     STAN_CHANNEL = 867024768745078785
+    guild = 715969933980467260
 
 # Create a new interactions Discord client
 intents = discord.Intents.default()
@@ -79,7 +81,7 @@ async def on_raw_reaction_add(payload):
             await message.delete()
 
 @commands.check(is_mod)
-@bot.message_command(name="Yeet to Stan", guild_ids=[715969933980467260])
+@bot.message_command(name="Yeet to Stan", guild_ids=guild)
 async def yeet(ctx: discord.ApplicationContext, message: discord.Message):
     await ctx.defer(ephemeral =True)
     stan = bot.get_channel(int(STAN_CHANNEL))
