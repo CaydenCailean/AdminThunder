@@ -13,6 +13,7 @@ try:
     MODS = os.environ['MODS'].split(',')
     STAN_CHANNEL = os.environ['STAN_CHANNEL']
     guild = [int(os.environ['GUILD'])]
+    print(MODS)
 
 except:
     config = configparser.ConfigParser()
