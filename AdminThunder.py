@@ -12,7 +12,7 @@ try:
     IGNORE_CHANNELS = os.environ['IGNORE_CHANNELS'].split(',')
     MODS = os.environ['MODS'].split(',')
     STAN_CHANNEL = os.environ['STAN_CHANNEL']
-    guild = os.environ['GUILD']
+    guild = [os.environ['GUILD']]
 
 except:
     config = configparser.ConfigParser()
