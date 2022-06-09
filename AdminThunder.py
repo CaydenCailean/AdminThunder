@@ -81,7 +81,7 @@ async def on_raw_reaction_add(payload):
             await message.delete()
 
 @commands.check(is_mod)
-@bot.message_command(name="Yeet to Stan", guild_ids=[guild])
+@bot.message_command(name="Yeet to Stan", guild_ids=guild)
 async def yeet(ctx: discord.ApplicationContext, message: discord.Message):
     await ctx.defer(ephemeral =True)
     stan = bot.get_channel(int(STAN_CHANNEL))
