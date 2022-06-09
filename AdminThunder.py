@@ -11,6 +11,9 @@ try:
     USER_COUNT = int(os.environ['USER_COUNT'])
     IGNORE_CHANNELS = os.environ['IGNORE_CHANNELS'].split(',')
     MODS = os.environ['MODS'].split(',')
+    for i in range(0, len(MODS)):
+        MODS[i] = int(MODS[i])
+
     STAN_CHANNEL = os.environ['STAN_CHANNEL']
     guild = [int(os.environ['GUILD'])]
     print(MODS)
