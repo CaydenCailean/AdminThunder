@@ -79,7 +79,6 @@ async def on_raw_reaction_add(payload):
             user = bot.get_user(message.author.id)
             if message.author.id != 304870344924200972:
                 await log_channel.send(f"Offending User: {user.display_name} \nChannel: {f'<#{channel.id}>'}\nTime: <t:{int(time.time())}:F> \nOffended Users: {', '.join(member.name for member in users)}\nMessage:\n\n {message.content}", files=files)
-                
                 await channel.send(f'{user.mention}, your post has been deleted and is under further review.')
 
             await message.delete()
