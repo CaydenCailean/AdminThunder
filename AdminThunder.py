@@ -16,6 +16,7 @@ try:
 
     STAN_CHANNEL = os.environ['STAN_CHANNEL']
     guild = [int(os.environ['GUILD'])]
+    POL_CHANNEL = os.environ['POL_CHANNEL']
     print(MODS)
 
 except:
@@ -27,7 +28,8 @@ except:
     IGNORE_CHANNELS = [715969933980467263]
     MODS = [96084847696560128]
     STAN_CHANNEL = 867024768745078785
-    guild = 715969933980467260
+    guild = [715969933980467260]
+    POL_CHANNEL = 743409734551470111
 
 # Create a new interactions Discord client
 intents = discord.Intents.default()
@@ -85,7 +87,7 @@ async def on_raw_reaction_add(payload):
 
 @commands.check(is_mod)
 @bot.message_command(name="Yeet to Stan", guild_ids=guild)
-async def yeet(ctx: discord.ApplicationContext, message: discord.Message):
+async def stan(ctx: discord.ApplicationContext, message: discord.Message):
     await ctx.defer(ephemeral =True)
     stan = bot.get_channel(int(STAN_CHANNEL))
     mod_channel = bot.get_channel(int(MOD_CHANNEL))
@@ -100,7 +102,7 @@ async def yeet(ctx: discord.ApplicationContext, message: discord.Message):
 
         
     new_message = await stan.send(f"{message.author.mention} (from {message.channel.mention}): {message.content}", files=files)
-    embed = discord.Embed(title="Yeeted to Stan's", description = f"Your message/images were sent to {stan}, as they were deemed inappropriate for {message.channel}.", color=0x00ff00)
+    embed = discord.Embed(title="Yeeted to Stan's", description = f"Your message/images were sent to {stan}, as they were deemed inappropriate for {message.channel}.", color=0xff0000)
     if message.content != "":
         embed.add_field(name = "Message", value = message.content)
     embed.add_field(name = "Moved By", value = ctx.author.display_name)
@@ -114,8 +116,38 @@ async def yeet(ctx: discord.ApplicationContext, message: discord.Message):
 
     await mod_channel.send(f"Message from {message.author.mention} in {message.channel.mention} was yeeted to {stan.mention}.")
 
+@commands.check(is_mod)
+@bot.message_command(name="Yeet to Politics", guild_ids=guild)
+async def politics(ctx: discord.ApplicationContext, message: discord.Message):
+    await ctx.defer(ephemeral = True)
+    politics = bot.get_channel(int(POL_CHANNEL))
+    mod_channel = bot.get_channel(int(MOD_CHANNEL))
+    files = []
+    try:
+        for index, attachment in enumerate(message.attachments):
+            #save attachment as file in /tmp/
+            await attachment.save(f'tmp/{index}_' + attachment.filename)
+            files.append(discord.File(f"tmp/{index}_{attachment.filename}"))
+    except:
+        files = None
 
-    
+    new_message = await politics.send(f"{message.author.mention} (from {message.channel.mention}): {message.content}", files=files)
+    embed = discord.Embed(title="Yeeted to Politics", description = f"Your message/images were sent to {politics}, as they were deemed inappropriate for {message.channel}.", color=0xff0000)
+    if message.content != "":
+        embed.add_field(name = "Message", value = message.content)
+    embed.add_field(name = "Moved By", value = ctx.author.display_name)
+    embed.add_field(name="Moved To", value = new_message.jump_url)
+    try:
+        await message.author.send(embed=embed)
+    except:
+        mod_channel.send(f"{message.author.display_name} could not be DMed by {bot.user.display_name}. Recommend followup regarding reasoning for message removal.")
+
+    await message.delete()
+
+    await mod_channel.send(f"Message from {message.author.mention} in {message.channel.mention} was yeeted to {politics.mention}.")
+
+
+
 #@yeet.error
 #async def info_error(ctx: discord.ApplicationContext, error):
 #    if isinstance(error, commands.CheckFailure):
